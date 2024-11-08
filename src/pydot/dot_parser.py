@@ -406,7 +406,7 @@ def graph_definition():
 
         ID = (identifier | float_number | html_text | double_quoted_string).setName("ID")
 
-        righthand_id = (float_number | ID).setName("righthand_id")
+        righthand_id = (ID).setName("righthand_id")
 
         port = (
             Group(Group(colon + ID) + Group(colon + ID))
