@@ -391,6 +391,10 @@ def graph_definition():
             pyparsing_unicode.BasicMultilingualPlane.alphanums + "_."
         ).setName("identifier")
 
+        float_number = Combine(
+            Optional(minus) + OneOrMore(Word(nums + "."))
+        ).setName("float_number")
+
         double_quoted_string = QuotedString(
             '"', multiline=True, unquoteResults=False, escChar="\\"
         )
@@ -400,11 +404,7 @@ def graph_definition():
         html_text << "<" + inner_html + ">"
         html_text.setParseAction(lambda arr: "".join(arr))
 
-        ID = (identifier | html_text | double_quoted_string).setName("ID")
-
-        float_number = Combine(
-            Optional(minus) + OneOrMore(Word(nums + "."))
-        ).setName("float_number")
+        ID = (identifier | float_number | html_text | double_quoted_string).setName("ID")
 
         righthand_id = (float_number | ID).setName("righthand_id")
 
